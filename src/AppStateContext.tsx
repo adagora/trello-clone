@@ -2,8 +2,13 @@ import React, { createContext, useReducer, useContext } from "react"
 import { AppState } from "./App"
 import {v1 as uuid} from "uuid"; 
 import { findItemIndexById } from "./utils/findItemIndexById"
+import { DragItem } from "./ ColumnDragItem";
 
 type Action =
+    | {
+        type:"SET_DRAGGED_ITEM"
+        payload: DragItem | undefined
+    }
     | {
         type: "ADD_LIST"
         payload: string
@@ -12,7 +17,7 @@ type Action =
         type: "ADD_TASK"
         payload: { text: string; taskId: string }
      }
-
+ 
 interface AppStateContextProps {
     state: AppState
     dispatch: React.Dispatch<any>
@@ -22,6 +27,9 @@ const AppStateContext = createContext<AppStateContextProps>({} as AppStateContex
 
 const appStateReducer = (state: AppState, action: Action): AppState => {
     switch (action.type) {
+        case "SET_DRAGGED_ITEM": {
+            return { ...state, draggedItem: action.payload }
+        }
         case "ADD_LIST": {
             return {
                 ...state,
@@ -54,6 +62,7 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
 }
 
 const appData: AppState = {
+    draggedItem: undefined,
     lists: [
     {
         id: "0",

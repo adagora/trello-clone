@@ -3,6 +3,7 @@ import { AppContainer } from "./styles"
 import Column from "./Column";
 import { AddNewItem } from "./AddNewItem"
 import { useAppState } from "./AppStateContext"
+import { DragItem } from "./ ColumnDragItem";
 
 interface Task {
   id: string
@@ -16,6 +17,7 @@ interface List {
 }
 
 export interface AppState {
+  draggedItem: DragItem | undefined
   lists: List[]
 }
 
